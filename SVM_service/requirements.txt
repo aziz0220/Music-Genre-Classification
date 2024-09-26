@@ -1,0 +1,4 @@
+Flask
+librosa
+scikit-learn 
+pickle-mixin
