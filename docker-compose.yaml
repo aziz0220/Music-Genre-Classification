@@ -1,23 +1,25 @@
 services:
-  # nginx
-  web:
-    image: nginx:latest
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+# nginx
+#  web:
+ #   image: nginx:latest
+  #  ports:
+   #   - "80:80"
+    #volumes:
+     # - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
 #    networks:
 #      - bridge-net
   svm_service:
     build:
         dockerfile: ./SVM_service/Dockerfile
     ports:
-      - "5001:5001"
+      - "5001:8000"
+    volumes:
+      - ./SVM_service:/app
   # model prediction
-#  vgg19_service:
- #   build:
-  #    dockerfile: ./VGG19_service/Dockerfile
-   # volumes:
-    #  - ./VGG19_service:/app
-  #  ports:
-   #   - "5002:5002"
+  vgg19_service:
+    build:
+      dockerfile: ./VGG19_service/Dockerfile
+    volumes:
+       - ./VGG19_service:/app
+    ports:
+       - "5002:8000"
