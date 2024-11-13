@@ -2,11 +2,11 @@
 /models/svm_model.pkl
 /models/VGG19.keras
 dataset
-models
 /models/*.pkl
 /models/*.keras
 /dataset/*.csv
 /dataset/*.wav
-./models/
 ./dataset/
 .idea
+/.idea/
+/.idea
