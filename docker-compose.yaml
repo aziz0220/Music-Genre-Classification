@@ -8,18 +8,24 @@ services:
      # - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
 #    networks:
 #      - bridge-net
+      
   svm_service:
     build:
         dockerfile: ./SVM_service/Dockerfile
     ports:
       - "5001:8000"
     volumes:
-      - ./SVM_service:/app
-  # model prediction
+      - ./SVM_service/app.py:/app/app.py
+      - ./SVM_service/requirements.txt:/app/requirements.txt
+      - ./models/svm_model.pkl:/app/model.pkl
+      - ./models/scaler.pkl:/app/scl.pkl
+
   vgg19_service:
-    build:
-      dockerfile: ./VGG19_service/Dockerfile
-    volumes:
-       - ./VGG19_service:/app
-    ports:
-       - "5002:8000"
+     build:
+       dockerfile: ./VGG19_service/Dockerfile
+     volumes:
+        - "./VGG19_service/app.py:/app/app.py"
+        - "./VGG19_service/requirements.txt:/app/requirements.txt"
+        - "./models/VGG19.keras:/app/model.keras"
+     ports:
+        - "5002:8000"

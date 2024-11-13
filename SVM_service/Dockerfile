@@ -26,45 +26,9 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
-#
-# Install system dependencies for OpenCV
-# RUN apt-get update && apt-get install -y --no-install-recommends \
-#     libgl1-mesa-glx \
-#     libglib2.0-0 \
-#     libsm6 \
-#     libxrender1 \
-#     libxext6 \
-#     && rm -rf /var/lib/apt/lists/*
-
-# Install system dependencies for dlib
-# RUN apt-get update && apt-get install -y --no-install-recommends \
-#     build-essential \
-#     cmake \
-#     libopenblas-dev \
-#     libjpeg-dev \
-#     libpng-dev \
-#     libtiff-dev \
-#     libavcodec-dev \
-#     libavformat-dev \
-#     libswscale-dev \
-#     libv4l-dev \
-#     libxvidcore-dev \
-#     libx264-dev \
-#     libatlas-base-dev \
-#     gfortran \
-#     && rm -rf /var/lib/apt/lists/*
-
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
-# Leverage a bind mount to requirements.txt to avoid having to copy them into
-# into this layer.
-# RUN python -m pip install --upgrade pip
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=SVM_service/requirements.txt,target=SVM_service/requirements.txt \
     python -m pip install -r SVM_service/requirements.txt
-
-# Copy the rest of the application code
-COPY . .
 
 # Expose the port used by the Flask app
 EXPOSE 8000
