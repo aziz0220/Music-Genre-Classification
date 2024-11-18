@@ -1,12 +1,6 @@
-/models/scaler.pkl
-/models/svm_model.pkl
-/models/VGG19.keras
 dataset
 /models/*.pkl
 /models/*.keras
 /dataset/*.csv
 /dataset/*.wav
-./dataset/
 .idea
-/.idea/
-/.idea

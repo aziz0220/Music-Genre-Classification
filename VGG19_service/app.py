@@ -81,9 +81,9 @@ def upload_form():
     return '''
         <!doctype html>
         <html>
-        <head><title>Upload WAV file</title></head>
+        <head><title>Upload WAV file With VGG 19</title></head>
         <body>
-            <h2>Upload a WAV file to classify its genre</h2>
+            <h2>Upload a WAV file to classify its genre with VGG19</h2>
             <form action="/vgg19_service" method="post" enctype="multipart/form-data">
                 <input type="file" name="wav_file" accept=".wav" required>
                 <button type="submit">Upload and Classify</button>

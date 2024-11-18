@@ -87,7 +87,7 @@ def upload_form():
         <html>
         <head><title>Upload WAV file</title></head>
         <body>
-            <h2>Upload a WAV file to classify its genre</h2>
+            <h2>Upload a WAV file to classify its genre With SVM</h2>
             <form action="/classify_genre" method="post" enctype="multipart/form-data">
                 <input type="file" name="wav_file" accept=".wav" required>
                 <button type="submit">Upload and Classify</button>
