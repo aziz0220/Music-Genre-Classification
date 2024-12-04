@@ -3,4 +3,6 @@ dataset
 /models/*.keras
 /dataset/*.csv
 /dataset/*.wav
+/.idea/
 .idea
+
