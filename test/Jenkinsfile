@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Start Docker Compose for all services
-                    sh 'docker-compose -f docker-compose.yaml up -d'
+                    sh 'docker compose -f docker-compose.yaml up -d'
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     // Stop all containers after tests
-                    sh 'docker-compose down'
+                    sh 'docker compose down'
                 }
             }
         }
