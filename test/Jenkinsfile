@@ -24,8 +24,8 @@ pipeline {
                     // Build Docker image for the frontend
 //                    docker.build(DOCKER_IMAGE_FRONTEND, '../frontend/Dockerfile')
                 }
-            }
-        }
+ //           }
+   //     }
         stage('Run Docker Compose') {
             steps {
                 script {
