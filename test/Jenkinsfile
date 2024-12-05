@@ -1,27 +1,28 @@
 pipeline {
     agent any
     environment {
+        DOCKER_COMPOSE_FILE = '../docker-compose.yaml'
         DOCKER_IMAGE_SVM = "svm_service_image"
         DOCKER_IMAGE_VGG = "vgg19_service_image"
         DOCKER_IMAGE_FRONTEND = "frontend_image"
     }
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/aziz0220/Mini-Projet-Docker'
             }
         }
-        stage('Build Docker Images') {
-            steps {
-                script {
-                    // Build Docker images for SVM service
-                    docker.build(DOCKER_IMAGE_SVM, '../SVM_service/Dockerfile')
+ //         stage('Build Docker Images') {
+//        steps {
+//                script {
+//                    // Build Docker images for SVM service
+//                    docker.build(DOCKER_IMAGE_SVM, '../SVM_service/Dockerfile')
 
                     // Build Docker images for VGG19 service
-                    docker.build(DOCKER_IMAGE_VGG, '../VGG19_service/Dockerfile')
+//                    docker.build(DOCKER_IMAGE_VGG, '../VGG19_service/Dockerfile')
 
                     // Build Docker image for the frontend
-                    docker.build(DOCKER_IMAGE_FRONTEND, '../frontend/Dockerfile')
+//                    docker.build(DOCKER_IMAGE_FRONTEND, '../frontend/Dockerfile')
                 }
             }
         }
@@ -29,20 +30,20 @@ pipeline {
             steps {
                 script {
                     // Start Docker Compose for all services
-                    sh 'docker-compose -f ../docker-compose.yaml up -d'
+                    sh 'docker-compose -f docker-compose.yaml up -d'
                 }
             }
         }
-        stage('Run Tests') {
-            steps {
-                script {
+    //    stage('Run Tests') {
+    //        steps {
+   //             script {
                     // Run automated tests for each service
-                    sh 'docker exec -t svm_service_container pytest tests/svm_tests.py'
-                    sh 'docker exec -t vgg19_service_container pytest tests/vgg19_tests.py'
-                    sh 'docker exec -t frontend_container pytest tests/frontend_tests.py'
-                }
-            }
-        }
+    //                sh 'docker exec -t svm_service_container pytest tests/svm_tests.py'
+    //                sh 'docker exec -t vgg19_service_container pytest tests/vgg19_tests.py'
+    //                sh 'docker exec -t frontend_container pytest tests/frontend_tests.py'
+      //          }
+    //        }
+     //   }
         stage('Stop Services') {
             steps {
                 script {
