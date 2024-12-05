@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from tensorflow.keras.models import load_model
 import numpy as np
 import librosa
@@ -9,6 +10,7 @@ from PIL import Image
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 # Load your pre-trained model (VGG19)
 model = load_model('model.keras')
@@ -73,7 +75,7 @@ def vgg19_service():
     # Clean up temporary audio file
     os.remove("temp_audio.wav")
 
-    return jsonify({'predicted_genre': predicted_genre})
+    return jsonify({'genre': predicted_genre})
 
 
 @app.route('/')

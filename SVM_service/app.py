@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, abort, render_template
+from flask_cors import CORS
 import librosa
 import numpy as np
 import joblib
@@ -6,6 +7,7 @@ import joblib
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 
 classifier = joblib.load('model.pkl')
@@ -117,6 +119,8 @@ def classify_genre():
     prediction = classifier.predict(features_scaled)
 
     os.remove(temp_file_path)
+
+    print(prediction[0])
 
     return jsonify({'genre': prediction[0]})
 

@@ -1,5 +1,4 @@
 dataset
-/models/*.pkl
 /models/*.keras
 /dataset/*.csv
 /dataset/*.wav
