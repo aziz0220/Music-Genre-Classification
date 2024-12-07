@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.414.3-lts-slim
+FROM jenkins/jenkins:2.479.2-lts-slim
 USER root
 RUN apt-get update && apt-get install -y apt-transport-https \
     apt-transport-https \
@@ -17,6 +17,8 @@ RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debia
 RUN apt-get update && apt-get install -y docker-ce-cli
 
 
+
+
 #RUN usermod -aG docker jenkins
 
 EXPOSE 8080
@@ -24,5 +26,7 @@ EXPOSE 8080
 USER jenkins
 
 RUN jenkins-plugin-cli --plugins blueocean:1.24.3
+
+RUN jenkins-plugin-cli --plugins json-path-api:2.8.0-5.v07cb_a_1ca_738c
 
 #ENTRYPOINT ["/usr/bin/java", "-Duser.timezone=UTC", "-jar", "/usr/share/jenkins/jenkins.war"]
