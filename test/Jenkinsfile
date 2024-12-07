@@ -4,6 +4,17 @@ pipeline {
         DOCKER_COMPOSE_FILE = '../docker-compose.yaml'
     }
     stages {
+        stage('Verify tooling'){
+            steps{
+                sh '''
+                    docker version
+                    docker info 
+                    docker compose version
+                    curl --version
+                    jq --version
+                    '''
+            }
+        }
         stage('Checkout Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/aziz0220/Mini-Projet-Docker'
