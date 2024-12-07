@@ -1,7 +1,12 @@
+/test/jenkins_home
+/test/docker_certs
 dataset
 /models/*.keras
 /dataset/*.csv
 /dataset/*.wav
 /.idea/
 .idea
-
+/test/jenkins_home/*
+/test/docker_certs/*
+/test/jenkins_home/
+/test/docker_certs/
