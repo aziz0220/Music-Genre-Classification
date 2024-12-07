@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Start Docker Compose for all services
-                    sh 'usr/bin/docker compose up '
+                    sh '/usr/bin/docker compose up '
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Stop all containers after tests
-                    sh 'usr/bin/docker compose down'
+                    sh '/usr/bin/docker compose down'
                 }
             }
         }
