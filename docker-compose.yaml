@@ -43,6 +43,6 @@ services:
         - "./models/VGG19.h5:/app/model.h5"
         #- ./VGG19_service/temp_spectrogram.png:/app/temp_spectrogram.png
      environment:
-        - KAGGLE_JSON=${{ secrets.KAGGLE_JSON }}
+        - KAGGLE_JSON=$${{ secrets.KAGGLE_JSON }}
      ports:
         - "5002:8000"
