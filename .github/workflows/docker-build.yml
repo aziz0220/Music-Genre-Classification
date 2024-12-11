@@ -19,6 +19,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Set up environment variables
+        run: |
+          echo "KAGGLE_JSON=${{ secrets.KAGGLE_JSON }}" >> $GITHUB_ENV
+
       - name: Build and test Docker images
         run: |
           docker compose -f docker-compose.yaml up --build -d
