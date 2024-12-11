@@ -31,14 +31,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     python -m pip install -r VGG19_service/requirements.txt
 
 # Ensure the .kaggle directory exists and copy kaggle.json
-RUN mkdir -p /root/.kaggle && echo "$KAGGLE_JSON" > /root/.kaggle/kaggle.json
+RUN mkdir -p ../root/.kaggle && echo "$KAGGLE_JSON" > ../root/.kaggle/kaggle.json
 
 
 # COPY /VGG19_service/kaggle.json ../root/.config/kaggle/kaggle.json
 
-RUN kaggle kernels output aziz0220/real-deep-learning-project -p .
+#RUN kaggle kernels output aziz0220/real-deep-learning-project -p .
 
-RUN ls
 
 EXPOSE 8000
 
