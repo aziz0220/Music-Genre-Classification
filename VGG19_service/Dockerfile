@@ -30,7 +30,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=VGG19_service/requirements.txt,target=VGG19_service/requirements.txt \
     python -m pip install -r VGG19_service/requirements.txt
 
+# Copy the Kaggle credentials from the environment variable
+RUN echo "$KAGGLE_JSON" > /root/.kaggle/kaggle.json
 
+# COPY /VGG19_service/kaggle.json ../root/.config/kaggle/kaggle.json
 
 EXPOSE 8000
 

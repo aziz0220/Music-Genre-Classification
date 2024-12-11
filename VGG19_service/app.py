@@ -6,20 +6,30 @@ import librosa
 import librosa.display
 import tensorflow as tf
 from PIL import Image
-
+import matplotlib.pyplot as plt
 import os
+import random
+
+def setRandom():
+    seed = 0 # random seed value
+    os.environ["PYTHONHASHSEED"] = str(seed) # if this is not set, a random value is used to seed the hashes of some objects
+    random.seed(seed) # sets the base python and numpy random seeds
+    np.random.seed(seed)
+    tf.random.set_seed(seed) # sets the tensorflow random seed
+    tf.compat.v1.set_random_seed(seed)
 
 app = Flask(__name__)
 CORS(app)
 
 # Load your pre-trained model (VGG19)
 model = load_model('model.keras')
-
+model.trainable = False  # Set the model to inference mode (if needed)
+print(model.summary())
 
 def wav_to_image(filePath):
     # Load audio file
     file, samplingRate = librosa.load(filePath)
-    print(file.shape, samplingRate)
+    #print(file.shape, samplingRate)
 
     # Trim silence from the beginning and end
     example, _ = librosa.effects.trim(file)
@@ -31,31 +41,54 @@ def wav_to_image(filePath):
                                        power=4.0),
         ref=np.max
     )
-
     # Resize spectrogram to fit your desired image size
     imgSize = (288, 432)
-
-    # Use PIL to save the image directly
-    pil_img = Image.fromarray(spectrogram, mode='L')  # 'L' mode for grayscale
-    pil_img = pil_img.resize(imgSize)  # Resize to target size
+    dpi = 72
+    figsize = (imgSize[1] / dpi, imgSize[0] / dpi)
+    plt.figure(figsize=figsize, dpi=dpi)
+   # plt.axis('off')
+    librosa.display.specshow(spectrogram
+                             #, sr=samplingRate, hop_length=hopLength
+                             #, x_axis = "off", y_axis = "off"
+                             )
     temp_img_path = 'temp_spectrogram.png'
-    pil_img.save(temp_img_path)
-    # Read the saved image using TensorFlow
-    image = tf.image.decode_png(tf.io.read_file(temp_img_path), channels=3)
-    image = tf.image.resize(image, imgSize)
-    image = image / 255.0  # Normalize pixel values between 0 and 1
-    # Clean up the temporary image
-    os.remove(temp_img_path)
+    plt.savefig(temp_img_path, 
+             #   bbox_inches='tight', pad_inches=0
+                )
+    plt.close()
+    image = tf.cast(tf.image.resize(tf.image.decode_png(tf.io.read_file(temp_img_path), channels = 3), imgSize), tf.float32) / 255.0
+
+
     return image
 
 
 # Function to predict genre
 def predict_genre(wav_file):
+    setRandom()
     mel_spectrogram = wav_to_image(wav_file)
-    mel_spectrogram = np.expand_dims(mel_spectrogram, axis=0)  # Expand dimensions for batch
+    mel_spectrogram = tf.image.convert_image_dtype(mel_spectrogram, tf.float32)
+    mel_spectrogram = np.expand_dims(mel_spectrogram, axis=0)
+    print(model.input_shape)  # Expected shape (None, 224, 224, 3) for VGG
+    print(mel_spectrogram.shape)  # Should be (1, 224, 224, 3)
+    # Expand dimensions for batch
     prediction = model.predict(mel_spectrogram)
-    genres = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock']
-    predicted_genre = genres[np.argmax(prediction)]
+    print(prediction)
+    genreMap = {
+    "blues": 0,
+    "classical": 1,
+    "country": 2,
+    "disco": 3,
+    "hiphop": 4,
+    "jazz": 5,
+    "metal": 6,
+    "pop": 7,
+    "reggae": 8,
+    "rock": 9
+    }
+    inverseGenreMap = {value: key for key, value in genreMap.items()}
+    #genres = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock']
+    #predicted_genre = genres[np.argmax(prediction)]
+    predicted_genre = inverseGenreMap[np.argmax(prediction)]
     return predicted_genre
 
 
