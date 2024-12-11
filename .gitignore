@@ -1,7 +1,7 @@
 /test/jenkins_home
 /test/docker_certs
 /models/*.keras
-./models/*.ipynb
+/models/*.ipynb
 /.idea/
 .idea
 /test/jenkins_home/*
@@ -9,7 +9,7 @@
 /test/jenkins_home/
 /test/docker_certs/
 test/docker_certs/
-./test/docker_certs
+/test/docker_certs
 /test/.env
 /VGG19_service/kaggle.json
 /models/*.h5
