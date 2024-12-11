@@ -25,6 +25,8 @@ services:
         dockerfile: ./SVM_service/Dockerfile
     ports:
       - "5001:8000"
+    environment:
+      - FLASK_ENV=development
     image: aziz02220/music-classifier-svm:latest
     volumes:
       - ./SVM_service/test.py:/app/test.py
@@ -32,6 +34,17 @@ services:
       - ./SVM_service/requirements.txt:/app/requirements.txt
       - ./models/svm_model.pkl:/app/model.pkl
       - ./models/scaler.pkl:/app/scl.pkl
+  svm-test-runner:
+    build:
+      dockerfile: ./SVM_service/Dockerfile
+    volumes:
+      - ./SVM_service/test.py:/app/test.py
+      - ./SVM_service/app.py:/app/app.py
+      - ./models/svm_model.pkl:/app/model.pkl
+      - ./models/scaler.pkl:/app/scl.pkl
+    depends_on:
+      - svm_service
+    command: pytest /app/test.py --maxfail=0 --disable-warnings
 
   vgg19_service:
      build:
@@ -49,3 +62,5 @@ services:
         - KAGGLE_JSON=$${{ secrets.KAGGLE_JSON }}
      ports:
         - "5002:8000"
+
+

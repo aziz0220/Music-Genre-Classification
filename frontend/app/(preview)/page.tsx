@@ -17,7 +17,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import Quiz from "@/components/quiz";
+//import Quiz from "@/components/quiz";
 import { Link } from "@/components/ui/link";
 import NextLink from "next/link";
 import { generateQuizTitle } from "./actions";

@@ -30,6 +30,8 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=SVM_service/requirements.txt,target=SVM_service/requirements.txt \
     python -m pip install -r SVM_service/requirements.txt
 
+COPY ./dataset/metal.wav .
+
 # Expose the port used by the Flask app
 EXPOSE 8000
 

@@ -3,3 +3,5 @@ flask-cors
 librosa
 scikit-learn 
 pickle-mixin
+pytest
+pytest-flask

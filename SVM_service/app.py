@@ -106,9 +106,9 @@ def classify_genre():
         abort(400, description="No file part in the request")
 
     wav_file = request.files['wav_file']
-    if wav_file.filename == '':
+    if wav_file.filename == '' or wav_file.stream.read() == b'':
         abort(400, description="No selected file")
-
+    wav_file.stream.seek(0)
     temp_file_path = 'temp.wav'
     wav_file.save(temp_file_path)
 
