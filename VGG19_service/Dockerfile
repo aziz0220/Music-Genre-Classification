@@ -30,8 +30,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=VGG19_service/requirements.txt,target=VGG19_service/requirements.txt \
     python -m pip install -r VGG19_service/requirements.txt
 
+RUN echo "KAGGLE_JSON=${KAGGLE_JSON}"
+
 # Ensure the .kaggle directory exists and copy kaggle.json
-RUN mkdir -p ../root/.kaggle && echo "$KAGGLE_JSON" > ../root/.kaggle/kaggle.json
+RUN mkdir -p ../root/.kaggle && echo "${KAGGLE_JSON}" > ../root/.kaggle/kaggle.json
 
 
 RUN chmod 600 ../root/.kaggle/kaggle.json
