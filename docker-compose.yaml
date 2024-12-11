@@ -13,6 +13,7 @@ services:
       dockerfile: ./frontend/Dockerfile
     ports:
       - "3000:3000"
+    image: aziz02220/music-genre-classifier:latest
     volumes:
       - ./frontend/app:/app/app
       - ./frontend/components:/app/components
@@ -24,6 +25,7 @@ services:
         dockerfile: ./SVM_service/Dockerfile
     ports:
       - "5001:8000"
+    image: aziz02220/music-classifier-svm:latest
     volumes:
       - ./SVM_service/test.py:/app/test.py
       - ./SVM_service/app.py:/app/app.py
@@ -34,6 +36,7 @@ services:
   vgg19_service:
      build:
        dockerfile: ./VGG19_service/Dockerfile
+     image: aziz02220/music-classifier-vgg:latest
      volumes:
         - ./dataset/metal.wav:/app/metal.wav
         - ./VGG19_service/test.py:/app/test.py
