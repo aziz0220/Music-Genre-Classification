@@ -36,6 +36,10 @@ RUN mkdir -p /root/.kaggle && echo "$KAGGLE_JSON" > /root/.kaggle/kaggle.json
 
 # COPY /VGG19_service/kaggle.json ../root/.config/kaggle/kaggle.json
 
+RUN kaggle kernels output aziz0220/real-deep-learning-project -p .
+
+RUN ls
+
 EXPOSE 8000
 
 CMD python app.py
