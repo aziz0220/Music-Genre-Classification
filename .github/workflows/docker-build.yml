@@ -23,7 +23,7 @@ jobs:
 
       - name: Build and test Docker images
         run: |
-          docker compose up -f docker-compose.yaml --build -d
+          docker compose -f docker-compose.yaml up --build -d
           docker compose run --rm svm-test-runner
           docker compose down
 
