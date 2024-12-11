@@ -106,9 +106,9 @@ We use the [GTZAN Dataset](https://www.kaggle.com/andradaolteanu/gtzan-dataset-m
 ---
 ## Kaggle Notebooks (for deploying MODELS)
 
-    -- **VGG 19** [https://www.kaggle.com/code/aziz0220/real-deep-learning-project](VGG19.keras)
+- **VGG 19** [https://www.kaggle.com/code/aziz0220/real-deep-learning-project](VGG19.keras)
 
-    --** SVM MODEL**[https://www.kaggle.com/code/aziz0220/svm-for-music-genres-classification](svm_model.pkl)
+- ** SVM MODEL**[https://www.kaggle.com/code/aziz0220/svm-for-music-genres-classification](svm_model.pkl)
 
     
 
@@ -128,8 +128,8 @@ A detailed report of the project, including implementation details and results, 
 ---
 
 ## Authors
-**Aziz BEN AMOR**
-**Skander ABID**
+- **Aziz BEN AMOR**
+- **Skander ABID**
 ---
 
 
