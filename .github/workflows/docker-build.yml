@@ -21,6 +21,7 @@ jobs:
 
       - name: Set up environment variables
         run: |
+          echo "${{ secrets.KAGGLE_JSON }}"
           echo "KAGGLE_JSON=${{ secrets.KAGGLE_JSON }}" >> $GITHUB_ENV
 
       - name: Build and test Docker images
