@@ -23,6 +23,7 @@ jobs:
         run: |
           echo "${{ secrets.KAGGLE_JSON }}"
           echo "KAGGLE_JSON=${{ secrets.KAGGLE_JSON }}" >> $GITHUB_ENV
+          echo "${KAGGLE_JSON}"
           docker compose -f docker-compose.yaml up --build -d
           docker compose run --rm svm-test-runner
           docker compose down
