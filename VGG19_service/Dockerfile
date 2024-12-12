@@ -36,11 +36,11 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 # Ensure the .kaggle directory exists and copy kaggle.json
 
-RUN mkdir -p ../root/.kaggle 
+RUN mkdir -p ../root/.config/kaggle 
 
-#RUN echo "{"username":"aziz0220","key":"a1ff095ae1c130a276dfe0b484cf3a5e"}" > ../root/.kaggle/kaggle.json
+#RUN echo "{"username":"aziz0220","key":"a1ff095ae1c130a276dfe0b484cf3a5e"}" > ../root/.config/kaggle/kaggle.json
 
-#RUN cat ../root/.kaggle/kaggle.json
+#RUN cat ../root/.config/kaggle/kaggle.json
 
 
 COPY /VGG19_service/kaggle.json ../root/.config/kaggle/kaggle.json
@@ -48,7 +48,7 @@ COPY /VGG19_service/kaggle.json ../root/.config/kaggle/kaggle.json
 # RUN kaggle kernels output aziz0220/real-deep-learning-project -p .
 
 
-RUN chmod 600 ../root/.kaggle/kaggle.json
+RUN chmod 600 ../root/.config/kaggle/kaggle.json
 
 EXPOSE 8000
 
