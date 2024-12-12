@@ -40,7 +40,7 @@ RUN chmod 600 ../root/.kaggle/kaggle.json
 
 # COPY /VGG19_service/kaggle.json ../root/.config/kaggle/kaggle.json
 
-RUN kaggle kernels output aziz0220/real-deep-learning-project -p .
+# RUN kaggle kernels output aziz0220/real-deep-learning-project -p .
 
 
 EXPOSE 8000

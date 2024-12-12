@@ -62,8 +62,14 @@ services:
         - "./models/VGG19.h5:/app/model.h5"
         #- ./VGG19_service/temp_spectrogram.png:/app/temp_spectrogram.png
      environment:
-        - KAGGLE_JSON=${KAGGLE_JSON}
+        - KAGGLE_JSON
      ports:
         - "5002:8000"
-
-
+  vgg-test-runner:
+    build:
+      dockerfile: ./VGG19_service/Dockerfile
+      args:
+        KAGGLE_JSON: ${KAGGLE_JSON}
+    depends_on:
+      - vgg19_service
+    command: kaggle kernels output aziz0220/real-deep-learning-project -p .
