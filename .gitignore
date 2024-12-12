@@ -11,6 +11,6 @@ test/docker_certs/
 test/docker_certs/
 test/docker_certs
 test/.env
-VGG19_service/kaggle.json
+#VGG19_service/kaggle.json
 models/*.h5
 models/VGG19.h5
