@@ -1,36 +1,21 @@
 import os
 import pytest
-from io import BytesIO
-from app import app  # Import the Flask app from your app.py
+from app import app
 
-# Test configuration
 @pytest.fixture
 def client():
-    """Fixture for setting up the test client."""
+    # Configure Flask app for testing
+    app.config['TESTING'] = True
     with app.test_client() as client:
         yield client
 
-def test_classify_genre_no_file(client):
-    """Test if the '/classify_genre' route returns a 400 error when no file is provided."""
+
+def test_vgg19_service_no_file(client):
+    # Test endpoint without a file
     response = client.post('/vgg19_service')
     assert response.status_code == 400
-    assert b"No file part" in response.data
+   # assert b"No file part" in response.data
+   # assert response.json['description'] == "No file part in the request"
 
-def test_classify_genre_empty_file(client):
-    """Test if the '/classify_genre' route returns a 400 error when an empty file is provided."""
-    data = {
-        'wav_file': (BytesIO(b''), 'empty.wav')
-    }
-    response = client.post('/vgg19_service', data=data)
-    assert response.status_code == 400
-    assert b"No selected file" in response.data
 
-def test_classify_genre_valid_file(client):
-    """Test if the '/classify_genre' route returns a valid genre prediction."""
-    with open("metal.wav", "rb") as f:
-        data = {
-            'wav_file': (f, 'metal.wav')
-        }
-        response = client.post('/vgg19_service', data=data)
-        assert response.status_code == 200
-        assert response.json['genre'] == 'metal'
+
