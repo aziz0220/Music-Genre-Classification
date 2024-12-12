@@ -71,6 +71,7 @@ services:
       # args:
       #   KAGGLE_JSON: ${KAGGLE_JSON}
     volumes:
+        - ./VGG19_service/test_flask.py:/app/test_flask.py
         - ./dataset/metal.wav:/app/metal.wav
         - ./VGG19_service/test.py:/app/test.py
         - "./VGG19_service/app.py:/app/app.py"
