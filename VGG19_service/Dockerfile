@@ -35,17 +35,20 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 #RUN --mount=type=secret,id=KAGGLE_JSON export KAGGLE_JSON=$(cat /run/secrets/KAGGLE_JSON) 
 
 # Ensure the .kaggle directory exists and copy kaggle.json
+
 RUN mkdir -p ../root/.kaggle 
+
 #RUN echo "{"username":"aziz0220","key":"a1ff095ae1c130a276dfe0b484cf3a5e"}" > ../root/.kaggle/kaggle.json
 
 #RUN cat ../root/.kaggle/kaggle.json
 
-RUN chmod 600 ../root/.kaggle/kaggle.json
 
 COPY /VGG19_service/kaggle.json ../root/.config/kaggle/kaggle.json
 
 # RUN kaggle kernels output aziz0220/real-deep-learning-project -p .
 
+
+RUN chmod 600 ../root/.kaggle/kaggle.json
 
 EXPOSE 8000
 
