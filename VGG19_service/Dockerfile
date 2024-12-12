@@ -45,10 +45,12 @@ RUN mkdir -p ../root/.config/kaggle
 
 COPY /VGG19_service/kaggle.json ../root/.config/kaggle/kaggle.json
 
-# RUN kaggle kernels output aziz0220/real-deep-learning-project -p .
+RUN kaggle kernels output aziz0220/real-deep-learning-project/VGG19.keras -p .
 
 
 RUN chmod 600 ../root/.config/kaggle/kaggle.json
+
+COPY ./dataset/metal.wav .
 
 EXPOSE 8000
 
