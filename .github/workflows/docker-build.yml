@@ -24,7 +24,7 @@ jobs:
           echo "${{ secrets.KAGGLE_JSON }}"
           echo "KAGGLE_JSON=${{ secrets.KAGGLE_JSON }}" >> $GITHUB_ENV
           echo "${KAGGLE_JSON}"
-          docker compose run --rm --env KAGGLE_JSON="${{ secrets.KAGGLE_JSON }}" vgg-test-runner
+          docker compose run --rm --env KAGGLE_JSON=${{ secrets.KAGGLE_JSON }} vgg-test-runner
           docker compose down
 
       - name: Push Docker images to Docker Hub
