@@ -50,7 +50,7 @@ services:
      build:
        dockerfile: ./VGG19_service/Dockerfile
        args:
-         KAGGLE_JSON: "$${{ secrets.KAGGLE_JSON }}" 
+         KAGGLE_JSON: ${{ secrets.KAGGLE_JSON }} 
      image: aziz02220/music-classifier-vgg:latest
 
      volumes:
@@ -69,7 +69,7 @@ services:
     build:
       dockerfile: ./VGG19_service/Dockerfile
       args:
-        KAGGLE_JSON: "$${{ secrets.KAGGLE_JSON }}"
+        KAGGLE_JSON: ${{ secrets.KAGGLE_JSON }}
     volumes:
         - ./dataset/metal.wav:/app/metal.wav
         - ./VGG19_service/test.py:/app/test.py
