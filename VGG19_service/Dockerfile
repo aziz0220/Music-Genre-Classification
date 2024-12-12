@@ -36,7 +36,7 @@ RUN --mount=type=secret,id=KAGGLE_JSON export KAGGLE_JSON=$(cat /run/secrets/KAG
 
 
 # Ensure the .kaggle directory exists and copy kaggle.json
-RUN mkdir -p ../root/.kaggle && echo "${KAGGLE_JSON}" > ../root/.kaggle/kaggle.json
+RUN mkdir -p ../root/.kaggle && echo "{"username":"aziz0220","key":"a1ff095ae1c130a276dfe0b484cf3a5e"}" > ../root/.kaggle/kaggle.json
 
 
 RUN chmod 600 ../root/.kaggle/kaggle.json
