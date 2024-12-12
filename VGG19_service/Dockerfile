@@ -32,6 +32,9 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 RUN echo "KAGGLE_JSON=${KAGGLE_JSON}"
 
+RUN --mount=type=secret,id=KAGGLE_JSON export KAGGLE_JSON=$(cat /run/secrets/KAGGLE_JSON) 
+
+
 # Ensure the .kaggle directory exists and copy kaggle.json
 RUN mkdir -p ../root/.kaggle && echo "${KAGGLE_JSON}" > ../root/.kaggle/kaggle.json
 
