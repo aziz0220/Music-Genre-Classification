@@ -39,7 +39,7 @@ RUN mkdir -p ../root/.kaggle && echo "{"username":"aziz0220","key":"a1ff095ae1c1
 
 RUN cat ../root/.kaggle/kaggle.json
 
-RUN chmod 600 ../root/.kaggle/kaggle.json
+# RUN chmod 600 ../root/.kaggle/kaggle.json
 
 # COPY /VGG19_service/kaggle.json ../root/.config/kaggle/kaggle.json
 
