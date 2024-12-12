@@ -50,7 +50,7 @@ services:
      build:
        dockerfile: ./VGG19_service/Dockerfile
        args:
-         KAGGLE_JSON: "$${{KAGGLE_JSON}}"
+         KAGGLE_JSON: "${KAGGLE_JSON}"
      image: aziz02220/music-classifier-vgg:latest
 
      volumes:
@@ -62,20 +62,20 @@ services:
         - "./models/VGG19.h5:/app/model.h5"
         #- ./VGG19_service/temp_spectrogram.png:/app/temp_spectrogram.png
      environment:
-      - KAGGLE_JSON : "$${{KAGGLE_JSON}}"
+      - KAGGLE_JSON : "${KAGGLE_JSON}"
      ports:
         - "5002:8000"
   vgg-test-runner:
     build:
       dockerfile: ./VGG19_service/Dockerfile
       args:
-        KAGGLE_JSON: "$${{KAGGLE_JSON}}"
+        KAGGLE_JSON: "${KAGGLE_JSON}"
     volumes:
         - ./dataset/metal.wav:/app/metal.wav
         - ./VGG19_service/test.py:/app/test.py
         - "./VGG19_service/app.py:/app/app.py"
     environment:
-        - KAGGLE_JSON : "$${{KAGGLE_JSON}}"
+        - KAGGLE_JSON : "${KAGGLE_JSON}"
     depends_on:
       - vgg19_service
     command: kaggle kernels output aziz0220/real-deep-learning-project -p .
