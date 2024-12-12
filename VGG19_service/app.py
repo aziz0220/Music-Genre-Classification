@@ -22,7 +22,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Load your pre-trained model (VGG19)
-model = load_model('model.keras')
+model = load_model('VGG19.keras')
 model.trainable = False  # Set the model to inference mode (if needed)
 print(model.summary())
 
