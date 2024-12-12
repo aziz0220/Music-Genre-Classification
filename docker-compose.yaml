@@ -70,6 +70,12 @@ services:
       dockerfile: ./VGG19_service/Dockerfile
       args:
         KAGGLE_JSON: ${KAGGLE_JSON}
+    volumes:
+        - ./dataset/metal.wav:/app/metal.wav
+        - ./VGG19_service/test.py:/app/test.py
+        - "./VGG19_service/app.py:/app/app.py"
+    environment:
+        - KAGGLE_JSON
     depends_on:
       - vgg19_service
     command: kaggle kernels output aziz0220/real-deep-learning-project -p .
