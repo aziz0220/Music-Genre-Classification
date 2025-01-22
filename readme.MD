@@ -101,14 +101,14 @@ Jenkins is configured to automate the build, test, and deployment processes.
 ---
 
 ## Dataset
-We use the [GTZAN Dataset](https://www.kaggle.com/andradaolteanu/gtzan-dataset-music-genre-classification) for training and testing models. Please ensure the dataset is downloaded and placed in the `dataset` directory before running the services.
+We use the [GTZAN Dataset](https://www.kaggle.com/andradaolteanu/gtzan-dataset-music-genre-classification) for training and testing models.
 
 ---
 ## Kaggle Notebooks (for deploying MODELS)
 
 - **VGG 19** [https://www.kaggle.com/code/aziz0220/real-deep-learning-project](https://www.kaggle.com/code/aziz0220/real-deep-learning-project)
 
-- ** SVM MODEL**[https://www.kaggle.com/code/aziz0220/svm-for-music-genres-classification](https://www.kaggle.com/code/aziz0220/real-deep-learning-project)
+- **SVM MODEL** [https://www.kaggle.com/code/aziz0220/svm-for-music-genres-classification](https://www.kaggle.com/code/aziz0220/real-deep-learning-project)
 
     
 
@@ -122,14 +122,10 @@ We use the [GTZAN Dataset](https://www.kaggle.com/andradaolteanu/gtzan-dataset-m
 
 ---
 
-## Report
-A detailed report of the project, including implementation details and results, is provided as a PDF.
-
 ---
 
 ## Authors
 - **Aziz BEN AMOR**
-- **Skander ABID**
 ---
 
 
