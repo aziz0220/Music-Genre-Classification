@@ -1,9 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { experimental_useObject } from "ai/react";
-import { questionsSchema } from "@/lib/schemas";
-import { z } from "zod";
 import { toast } from "sonner";
 import { FileUp, Plus, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,18 +14,12 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-//import Quiz from "@/components/quiz";
-import { Link } from "@/components/ui/link";
 import NextLink from "next/link";
-import { generateQuizTitle } from "./actions";
 import { AnimatePresence, motion } from "framer-motion";
-import { VercelIcon, GitIcon } from "@/components/icons";
+import { LinkedInIcon, GitIcon } from "@/components/icons";
 
-export default function ChatWithFiles() {
+export default function ClassifyMusic() {
   const [files, setFiles] = useState<File[]>([]);
-  const [questions, setQuestions] = useState<z.infer<typeof questionsSchema>>(
-    [],
-  );
   const [genre, setGenre] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -69,7 +60,6 @@ export default function ChatWithFiles() {
     };
   };
   const [isDragging, setIsDragging] = useState(false);
-  const [title, setTitle] = useState<string>();
 
   const classifyGenre = async (wavFile: File): Promise<string> => {
     const formData = new FormData();
@@ -100,22 +90,7 @@ export default function ChatWithFiles() {
 
   const { submit } = useClassifyGenre();
 
- // const {
-  //  submit,
- //   object: partialQuestions,
- //   isLoading,
- // } = experimental_useObject({
-  //  api: "/api/generate-quiz",
- //   schema: questionsSchema,
-  //  initialValue: undefined,
-  //  onError: (error) => {
-  //    toast.error("Failed to generate quiz. Please try again.");
-  //    setFiles([]);
-  //  },
-  //  onFinish: ({ object }) => {
-  //    setQuestions(object ?? []);
-  //  },
-  //});
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -140,14 +115,6 @@ export default function ChatWithFiles() {
     setFiles(validFiles);
   };
 
-  //const encodeFileAsBase64 = (file: File): Promise<string> => {
-   //  return new Promise((resolve, reject) => {
-      // const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => resolve(reader.result as string);
-   //    reader.onerror = (error) => reject(error);
-   //  });
-   //};
 
  const handleSubmitWithFiles = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -155,17 +122,7 @@ export default function ChatWithFiles() {
     submit({ files: encodedFiles });
   };
 
-  const clearPDF = () => {
-    setFiles([]);
-    setQuestions([]);
-  };
 
-
- // if (!isLoading) {
- //   return (
- //     <Quiz title={title ?? "GENRE"} questions={questions} clearPDF={clearPDF} />
-//    );
-//  }
 
   return (
     <div
@@ -320,7 +277,7 @@ export default function ChatWithFiles() {
           href="https://www.linkedin.com/in/aziz-benamor/"
           className="flex flex-row gap-2 items-center bg-zinc-900 px-2 py-1.5 rounded-md text-zinc-50 hover:bg-zinc-950 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-50"
         >
-          <VercelIcon size={14} />
+          <LinkedInIcon size={14} />
           LinkedIn
         </NextLink>
       </motion.div>

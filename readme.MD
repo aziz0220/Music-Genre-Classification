@@ -1,8 +1,12 @@
-# Mini-Projet-Docker: Machine Learning Music Genre Classification
+# Machine Learning Music Genre Classification
 
 ## Overview
 This project is part of the **Mini Projet: Nouvelles Architectures** course at ENSIT. It demonstrates the use of Docker to integrate, deploy, and test a Machine Learning environment using Python and Flask. The goal is to classify music genres based on audio features extracted from the [GTZAN Dataset - Music Genre Classification](https://www.kaggle.com/andradaolteanu/gtzan-dataset-music-genre-classification).
 
+
+<p align="center" style="width: 100%;">
+  <img src="public/demo.gif" alt="Demo" style="width: 55%"/>
+</p>
 ---
 
 ## Features
