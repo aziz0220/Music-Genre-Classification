@@ -18,9 +18,8 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
-RUN --mount=type=cache,target=/root/.cache/pip \
-    --mount=type=bind,source=VGG19_service/requirements.txt,target=VGG19_service/requirements.txt \
-    python -m pip install -r VGG19_service/requirements.txt
+COPY VGG19_service/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 ARG KAGGLE_API_TOKEN
 ENV KAGGLE_API_TOKEN=${KAGGLE_API_TOKEN:-}
@@ -29,7 +28,8 @@ RUN mkdir -p /root/.config/kaggle
 
 RUN kaggle kernels output aziz0220/real-deep-learning-project/VGG19.keras -p .
 
-COPY ./dataset/metal.wav .
+COPY VGG19_service/app.py .
+COPY dataset/metal.wav .
 
 EXPOSE 8000
 

@@ -21,7 +21,10 @@ RUN adduser \
 COPY SVM_service/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./dataset/metal.wav .
+COPY SVM_service/app.py .
+COPY models/svm_model.pkl model.pkl
+COPY models/scaler.pkl scl.pkl
+COPY dataset/metal.wav .
 
 EXPOSE 8000
 
