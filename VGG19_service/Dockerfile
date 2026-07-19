@@ -1,12 +1,6 @@
-FROM python:3.10-slim
-
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+FROM tensorflow/tensorflow:2.15.0
 
 WORKDIR /app
-
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
