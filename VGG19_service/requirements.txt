@@ -1,9 +1,7 @@
 flask
 flask-cors
 librosa
-scikit-learn
 tensorflow
 matplotlib
 pillow
-requests
 gunicorn
