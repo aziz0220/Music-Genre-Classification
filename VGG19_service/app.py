@@ -13,6 +13,10 @@ import os
 import random
 import subprocess
 import sys
+import warnings
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+warnings.filterwarnings('ignore')
 
 def setRandom():
     seed = 0
@@ -26,13 +30,17 @@ def download_model():
     model_path = 'VGG19.keras'
     if not os.path.exists(model_path):
         print("Downloading VGG19 model from Kaggle...")
+        token = os.environ.get('KAGGLE_API_TOKEN')
+        if token:
+            os.environ['KAGGLE_API_TOKEN'] = token
         result = subprocess.run(
             [sys.executable, '-m', 'kaggle', 'kernels', 'output',
              'aziz0220/real-deep-learning-project/VGG19.keras', '-p', '.'],
-            capture_output=True, text=True, timeout=300
+            capture_output=True, text=True, timeout=600
         )
         if result.returncode != 0:
-            print(f"Kaggle download failed: {result.stderr}")
+            print(f"Kaggle download stderr: {result.stderr}")
+            print(f"Kaggle download stdout: {result.stdout}")
             raise RuntimeError(f"Failed to download model: {result.stderr}")
         print("Model downloaded successfully.")
     else:
