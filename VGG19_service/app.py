@@ -4,9 +4,8 @@ import numpy as np
 import librosa
 import librosa.display
 import tensorflow as tf
-from tensorflow.keras.applications import VGG19
-from tensorflow.keras.models import Model, load_model
-from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.models import Model, load_model, Sequential
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Conv2D, MaxPooling2D, Flatten, Dropout
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -32,12 +31,19 @@ def setRandom():
 
 def ensure_model():
     if not os.path.exists(MODEL_PATH):
-        print("Building VGG19 model...")
-        base = VGG19(weights='imagenet', include_top=False, input_shape=(288, 432, 3))
-        x = GlobalAveragePooling2D()(base.output)
-        x = Dense(256, activation='relu')(x)
-        output = Dense(10, activation='softmax', name='genre')(x)
-        m = Model(inputs=base.input, outputs=output)
+        print("Building CNN model from scratch...")
+        m = Sequential([
+            Conv2D(32, (3,3), activation='relu', input_shape=(288, 432, 3)),
+            MaxPooling2D(2,2),
+            Conv2D(64, (3,3), activation='relu'),
+            MaxPooling2D(2,2),
+            Conv2D(128, (3,3), activation='relu'),
+            MaxPooling2D(2,2),
+            Flatten(),
+            Dense(256, activation='relu'),
+            Dropout(0.5),
+            Dense(10, activation='softmax')
+        ])
         m.compile(optimizer='adam', loss='categorical_crossentropy')
         m.save(MODEL_PATH)
         print(f"Model saved to {MODEL_PATH}")
