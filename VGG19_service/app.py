@@ -10,7 +10,6 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
 import random
-import requests
 import warnings
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -27,30 +26,8 @@ def setRandom():
     tf.random.set_seed(seed)
     tf.compat.v1.set_random_seed(seed)
 
-def download_model():
-    model_path = 'VGG19.keras'
-    if not os.path.exists(model_path):
-        print("Downloading VGG19 model...")
-        url = "https://www.kaggle.com/api/v1/kernels/output/aziz0220/real-deep-learning-project"
-        token = os.environ.get('KAGGLE_API_TOKEN', '')
-        headers = {}
-        if token:
-            headers['Authorization'] = f'Bearer {token}'
-        resp = requests.get(url, headers=headers, timeout=300, allow_redirects=True)
-        if resp.status_code != 200:
-            raise RuntimeError(f"Kaggle API error: HTTP {resp.status_code}")
-        import zipfile, io
-        z = zipfile.ZipFile(io.BytesIO(resp.content))
-        with z.open('VGG19.keras') as f:
-            with open(model_path, 'wb') as out:
-                out.write(f.read())
-        print(f"Model downloaded successfully.")
-    else:
-        print("Model already exists.")
-
 print("Initializing VGG19 service...")
 try:
-    download_model()
     model = load_model('VGG19.keras')
     model.trainable = False
     print("Model loaded.")
