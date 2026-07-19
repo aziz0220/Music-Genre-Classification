@@ -65,8 +65,8 @@ export default function ClassifyMusic() {
     const formData = new FormData();
     formData.append("wav_file", wavFile);
     const serviceUrl = service === 0
-      ? "http://localhost:5001/classify_genre"
-      : "http://localhost:5002/vgg19_service";
+      ? (process.env.NEXT_PUBLIC_SVM_URL || "http://localhost:5001/classify_genre")
+      : (process.env.NEXT_PUBLIC_VGG_URL || "http://localhost:5002/vgg19_service");
     try {
       const response = await fetch(serviceUrl , {
         method: "POST",
@@ -265,7 +265,7 @@ export default function ClassifyMusic() {
       >
         <NextLink
           target="_blank"
-          href="https://github.com/aziz0220/Mini-Projet-Docker"
+          href="https://github.com/aziz0220/Music-Genre-Classification"
           className="flex flex-row gap-2 items-center border px-2 py-1.5 rounded-md hover:bg-zinc-100 dark:border-zinc-800 dark:hover:bg-zinc-800"
         >
           <GitIcon />

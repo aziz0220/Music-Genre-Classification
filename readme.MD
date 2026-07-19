@@ -1,139 +1,227 @@
-# Machine Learning Music Genre Classification
+# Music Genre Classification
 
-## Overview
-This project is part of the **Mini Projet: Nouvelles Architectures** course at ENSIT. It demonstrates the use of Docker to integrate, deploy, and test a Machine Learning environment using Python and Flask. The goal is to classify music genres based on audio features extracted from the [GTZAN Dataset - Music Genre Classification](https://www.kaggle.com/andradaolteanu/gtzan-dataset-music-genre-classification).
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://music-genre-classifier.vercel.app)
+[![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker)](https://hub.docker.com/u/aziz02220)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
+Classify music genres from WAV audio files using two machine learning models — **SVM** (traditional ML) and **VGG19** (deep learning). Built with Flask backends, a Next.js frontend, and fully containerized with Docker.
 
-<p align="center" style="width: 100%">
-  <img src="public/demo.gif" alt="Demo" style="width: 80%"/>
+<p align="center">
+  <img src="public/demo.gif" alt="Demo" width="80%"/>
 </p>
 
+---
+
+## Live Demo
+
+| Service | URL |
+|---|---|
+| Frontend | [https://music-genre-classifier.vercel.app](https://music-genre-classifier.vercel.app) |
+| SVM API | [https://music-genre-svm.onrender.com](https://music-genre-svm.onrender.com) |
+| VGG19 API | [https://music-genre-vgg.onrender.com](https://music-genre-vgg.onrender.com) |
 
 ---
 
 ## Features
-1. **Music Genre Classification Services:**
-    - **SVM Service:** A Flask-based web service that uses a Support Vector Machine (SVM) model to classify the genre of a WAV file.
-    - **VGG19 Service:** A Flask-based web service that leverages the VGG19 neural network to classify the genre of a WAV file.
-2. **Frontend Application:** A user-friendly interface to interact with the classification services.
-3. **Dockerized Setup:** All components are containerized for seamless orchestration using Docker Compose.
-4. **Continuous Integration and Testing:** Jenkins is configured for CI/CD to ensure smooth development and deployment workflows.
+
+- **SVM Service** — Flask-based web service using a Support Vector Machine model trained on handcrafted audio features (MFCCs, spectral features, etc.)
+- **VGG19 Service** — Flask-based web service using a VGG19 convolutional neural network on mel-spectrogram images
+- **Next.js Frontend** — Modern UI with file upload, drag-and-drop, and SVM/VGG model toggle
+- **Dockerized** — All components containerized with Docker Compose
+- **CI/CD** — GitHub Actions for Docker builds & pushes, Jenkins pipeline for testing
 
 ---
 
 ## Project Structure
+
 ```
-Mini-Projet-Docker
-├── .github/workflows    # GitHub Actions workflows for CI
-├── SVM_service          # Flask service for SVM model
-├── VGG19_service        # Flask service for VGG19 model
-├── dataset              # Music dataset files
-├── frontend             # Frontend application
-├── models               # Pre-trained models
-├── test                 # Test cases for services
-├── docker-compose.yaml  # Docker Compose file to orchestrate services
-└── Jenkinsfile          # Jenkins pipeline configuration
+Music-Genre-Classification
+├── .github/workflows      # GitHub Actions CI workflows
+├── SVM_service            # Flask service for SVM model
+│   ├── app.py             # SVM inference API
+│   ├── Dockerfile         # SVM container
+│   └── test.py            # Pytest tests
+├── VGG19_service          # Flask service for VGG19 model
+│   ├── app.py             # VGG19 inference API
+│   ├── Dockerfile         # VGG19 container
+│   ├── test.py            # Offline model test
+│   └── test_flask.py      # Pytest tests
+├── frontend               # Next.js 15 application
+│   ├── app/               # App Router pages
+│   ├── components/        # UI components (shadcn/ui)
+│   ├── vercel.json        # Vercel deployment config
+│   └── Dockerfile         # Frontend container
+├── models                 # Pre-trained ML models
+│   ├── svm_model.pkl      # Trained SVM classifier
+│   └── scaler.pkl         # Feature scaler
+├── dataset                # GTZAN dataset samples
+├── test                   # Jenkins CI configuration
+├── docker-compose.yaml    # Local orchestration
+└── render.yaml            # Render deployment config
 ```
 
 ---
 
-## Technologies Used
-- **Machine Learning:**
-  - SVM (Support Vector Machine)
-  - VGG19 Neural Network
-- **Web Framework:** Flask
-- **Containerization:** Docker, Docker Compose
-- **Continuous Integration/Deployment:** GitHub Actions, Jenkins
-- **Frontend:** Next.JS
+## Technologies
+
+- **Machine Learning:** Scikit-learn (SVM), TensorFlow/Keras (VGG19)
+- **Audio Processing:** Librosa, MFCC, Mel-spectrograms
+- **Backend:** Flask, Flask-CORS, Gunicorn
+- **Frontend:** Next.js 15, Tailwind CSS, shadcn/ui, Framer Motion
+- **Infrastructure:** Docker, Docker Compose, GitHub Actions, Render, Vercel
 
 ---
 
-## Getting Started
+## Quick Start (Local Development)
 
 ### Prerequisites
-- Install [Docker](https://www.docker.com/get-started)
-- Install [Docker Compose](https://docs.docker.com/compose/install/)
-- Optional: Install [Jenkins](https://www.jenkins.io/) for CI/CD or use the [Jenkins DOCKER instructions](https://www.jenkins.io/doc/book/installing/docker/)
 
-### Setup and Run
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/aziz0220/Mini-Projet-Docker.git
-   cd Mini-Projet-Docker
-   ```
-2. **Build and Run Containers:**
-   ```bash
-   docker compose up --build -d
-   ```
-3. **Access Services:**
-   - **Frontend:** [http://localhost:3000](http://localhost:3000)
-   - **SVM Service:** [http://localhost:5000](http://localhost:5000)
-   - **VGG19 Service:** [http://localhost:5001](http://localhost:5001)
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-4. **Stop Containers:**
-   ```bash
-   docker compose down
-   ```
+### Setup
+
+```bash
+git clone https://github.com/aziz0220/Music-Genre-Classification.git
+cd Music-Genre-Classification
+```
+
+For VGG19 model download, set your Kaggle credentials:
+```bash
+export KAGGLE_USERNAME="your-kaggle-username"
+export KAGGLE_KEY="your-kaggle-api-key"
+```
+
+### Run
+
+```bash
+docker compose up --build -d
+```
+
+### Access
+
+| Service | URL |
+|---|---|
+| Frontend | [http://localhost:3000](http://localhost:3000) |
+| SVM API | [http://localhost:5001](http://localhost:5001) |
+| VGG19 API | [http://localhost:5002](http://localhost:5002) |
+
+### Stop
+
+```bash
+docker compose down
+```
 
 ---
 
 ## API Endpoints
 
-### SVM Service
-- **Endpoint:** `/classify`
-- **Method:** POST
-- **Input:** Base64-encoded WAV file
-- **Output:** JSON with predicted genre
+### SVM Service (`http://localhost:5001`)
 
-### VGG19 Service
-- **Endpoint:** `/classify`
-- **Method:** POST
-- **Input:** Base64-encoded WAV file
-- **Output:** JSON with predicted genre
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | HTML upload form |
+| POST | `/classify_genre` | Upload WAV file → returns `{"genre": "..."}` |
+
+### VGG19 Service (`http://localhost:5002`)
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | HTML upload form |
+| POST | `/vgg19_service` | Upload WAV file → returns `{"genre": "..."}` |
 
 ---
 
-## Continuous Integration (CI/CD)
+## Production Deployment
+
+### Frontend → Vercel
+
+The frontend is pre-configured for Vercel deployment. Connect the GitHub repository:
+
+1. Go to [vercel.com](https://vercel.com) and import `aziz0220/Music-Genre-Classification`
+2. Set root directory to `frontend/`
+3. Add environment variables:
+   - `NEXT_PUBLIC_SVM_URL` → `https://music-genre-svm.onrender.com/classify_genre`
+   - `NEXT_PUBLIC_VGG_URL` → `https://music-genre-vgg.onrender.com/vgg19_service`
+4. Deploy
+
+### Backend Services → Render
+
+Both backend services are configured for deployment on [Render](https://render.com) via `render.yaml`:
+
+1. Go to [render.com](https://render.com) → Blueprint → Connect repository
+2. Select `aziz0220/Music-Genre-Classification`
+3. For the VGG19 service, set the following environment secrets:
+   - `KAGGLE_USERNAME` — Your Kaggle username
+   - `KAGGLE_KEY` — Your Kaggle API key
+4. Deploy
+
+### Manual Docker Deployment
+
+```bash
+docker compose -f docker-compose.yaml up --build -d
+```
+
+For production Docker images:
+```bash
+docker compose build
+docker compose push
+```
+
+---
+
+## Models
+
+### SVM (Support Vector Machine)
+- Trained on GTZAN dataset using hand-crafted audio features
+- 57 features: MFCCs, spectral centroid, bandwidth, rolloff, zero-crossing rate, tempo, etc.
+- Pre-trained model included in `models/svm_model.pkl` + `models/scaler.pkl`
+
+### VGG19 (Deep Neural Network)
+- Fine-tuned VGG19 CNN trained on mel-spectrogram images
+- Input: 288×432 mel-spectrogram → prediction over 10 genres
+- Model downloaded from Kaggle at build time (not stored in repo)
+
+### Dataset
+[GTZAN Dataset](https://www.kaggle.com/andradaolteanu/gtzan-dataset-music-genre-classification) — 1000 audio tracks across 10 genres:
+`blues`, `classical`, `country`, `disco`, `hiphop`, `jazz`, `metal`, `pop`, `reggae`, `rock`
+
+### Kaggle Notebooks
+- [VGG19 Training](https://www.kaggle.com/code/aziz0220/real-deep-learning-project)
+- [SVM Training](https://www.kaggle.com/code/aziz0220/svm-for-music-genres-classification)
+
+---
+
+## CI/CD
 
 ### GitHub Actions
-The repository includes workflows for:
-- Building Docker images
-- Running tests
-- Deploying the application
+- Builds Docker images and pushes to Docker Hub
+- Runs automated tests against SVM and VGG19 services
+- Triggered manually via `workflow_dispatch`
 
 ### Jenkins
-Jenkins is configured to automate the build, test, and deployment processes.
+- Jenkins pipeline in `test/Jenkinsfile`
+- Jenkins Docker setup instructions in `test/Readme.MD`
 
 ---
-
-## Dataset
-We use the [GTZAN Dataset](https://www.kaggle.com/andradaolteanu/gtzan-dataset-music-genre-classification) for training and testing models.
-
----
-## Kaggle Notebooks (for deploying MODELS)
-
-- **VGG 19** [https://www.kaggle.com/code/aziz0220/real-deep-learning-project](https://www.kaggle.com/code/aziz0220/real-deep-learning-project)
-
-- **SVM MODEL** [https://www.kaggle.com/code/aziz0220/svm-for-music-genres-classification](https://www.kaggle.com/code/aziz0220/svm-for-music-genres-classification)
-
-    
-
 
 ## Testing
-- Tests are located in the `test` directory.
-- Run tests using Docker:
-  ```bash
-  docker-compose run --rm test-runner
-  ```
+
+Run tests locally with Docker:
+```bash
+docker compose run --rm svm-test-runner
+docker compose run --rm vgg-test-runner
+```
 
 ---
 
+## Author
+
+**Aziz BEN AMOR** — [GitHub](https://github.com/aziz0220) · [LinkedIn](https://www.linkedin.com/in/aziz-benamor/)
+
 ---
 
-## Authors
-- **Aziz BEN AMOR**
----
+## License
 
-
-
-
+MIT

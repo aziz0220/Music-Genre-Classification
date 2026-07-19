@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: music-genre-svm
+    env: docker
+    repo: https://github.com/aziz0220/Music-Genre-Classification
+    dockerfilePath: ./SVM_service/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: FLASK_ENV
+        value: production
+    healthCheckPath: /
+    plan: free
+
+  - type: web
+    name: music-genre-vgg
+    env: docker
+    repo: https://github.com/aziz0220/Music-Genre-Classification
+    dockerfilePath: ./VGG19_service/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: KAGGLE_USERNAME
+        sync: false
+      - key: KAGGLE_KEY
+        sync: false
+    healthCheckPath: /
+    plan: free

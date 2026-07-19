@@ -19,7 +19,7 @@ services:
       - ./frontend/components:/app/components
       - ./frontend/package.json:/app/package.json
       - ./frontend/package-lock.json:/app/package-lock.json
-      - ./frontend/tsconfig.json.ts:/app/tsconfig.json.ts
+      - ./frontend/tsconfig.json:/app/tsconfig.json
   svm_service:
     build:
         dockerfile: ./SVM_service/Dockerfile
@@ -49,8 +49,9 @@ services:
   vgg19_service:
      build:
        dockerfile: ./VGG19_service/Dockerfile
-       # args:
-       #   KAGGLE_JSON: ${KAGGLE_JSON}
+       args:
+         KAGGLE_USERNAME: ${KAGGLE_USERNAME}
+         KAGGLE_KEY: ${KAGGLE_KEY}
      image: aziz02220/music-classifier-vgg:latest
 
      volumes:
@@ -68,8 +69,9 @@ services:
   vgg-test-runner:
     build:
       dockerfile: ./VGG19_service/Dockerfile
-      # args:
-      #   KAGGLE_JSON: ${KAGGLE_JSON}
+      args:
+        KAGGLE_USERNAME: ${KAGGLE_USERNAME}
+        KAGGLE_KEY: ${KAGGLE_KEY}
     volumes:
         - ./VGG19_service/test_flask.py:/app/test_flask.py
         - ./dataset/metal.wav:/app/metal.wav

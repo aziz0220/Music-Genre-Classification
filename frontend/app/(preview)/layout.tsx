@@ -7,7 +7,7 @@ import { Geist } from "next/font/google";
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://music-classifier.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://music-genre-classifier.vercel.app"),
   title: "Music Genre Classifier",
   description: "classify WAV music files to genres using SVM and VGG",
 };
