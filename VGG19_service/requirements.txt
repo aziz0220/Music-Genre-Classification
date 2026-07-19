@@ -1,10 +1,3 @@
-Flask
+flask
 flask-cors
-librosa
-scikit-learn
-tensorflow
-matplotlib
-pillow
-kaggle
 gunicorn
-kagglehub
