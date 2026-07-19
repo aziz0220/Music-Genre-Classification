@@ -1,3 +1,9 @@
 flask
 flask-cors
+librosa
+scikit-learn
+tensorflow
+matplotlib
+pillow
+kagglehub
 gunicorn
