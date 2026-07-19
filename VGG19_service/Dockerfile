@@ -22,12 +22,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=VGG19_service/requirements.txt,target=VGG19_service/requirements.txt \
     python -m pip install -r VGG19_service/requirements.txt
 
-ARG KAGGLE_USERNAME
-ARG KAGGLE_KEY
+ARG KAGGLE_API_TOKEN
+ENV KAGGLE_API_TOKEN=${KAGGLE_API_TOKEN:-}
 
-RUN mkdir -p /root/.config/kaggle && \
-    echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > /root/.config/kaggle/kaggle.json && \
-    chmod 600 /root/.config/kaggle/kaggle.json
+RUN mkdir -p /root/.config/kaggle
 
 RUN kaggle kernels output aziz0220/real-deep-learning-project/VGG19.keras -p .
 
