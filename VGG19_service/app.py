@@ -6,25 +6,47 @@ import librosa
 import librosa.display
 import tensorflow as tf
 from PIL import Image
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
 import random
+import subprocess
+import sys
 
 def setRandom():
-    seed = 0 # random seed value
-    os.environ["PYTHONHASHSEED"] = str(seed) # if this is not set, a random value is used to seed the hashes of some objects
-    random.seed(seed) # sets the base python and numpy random seeds
+    seed = 0
+    os.environ["PYTHONHASHSEED"] = str(seed)
+    random.seed(seed)
     np.random.seed(seed)
-    tf.random.set_seed(seed) # sets the tensorflow random seed
+    tf.random.set_seed(seed)
     tf.compat.v1.set_random_seed(seed)
+
+def download_model():
+    model_path = 'VGG19.keras'
+    if not os.path.exists(model_path):
+        print("Downloading VGG19 model from Kaggle...")
+        result = subprocess.run(
+            [sys.executable, '-m', 'kaggle', 'kernels', 'output',
+             'aziz0220/real-deep-learning-project/VGG19.keras', '-p', '.'],
+            capture_output=True, text=True, timeout=300
+        )
+        if result.returncode != 0:
+            print(f"Kaggle download failed: {result.stderr}")
+            raise RuntimeError(f"Failed to download model: {result.stderr}")
+        print("Model downloaded successfully.")
+    else:
+        print("Model already exists.")
 
 app = Flask(__name__)
 CORS(app)
 
-# Load your pre-trained model (VGG19)
+print("Initializing VGG19 service...")
+download_model()
+
 model = load_model('VGG19.keras')
-model.trainable = False  # Set the model to inference mode (if needed)
-print(model.summary())
+model.trainable = False
+print("Model loaded successfully.")
 
 def wav_to_image(filePath):
     # Load audio file

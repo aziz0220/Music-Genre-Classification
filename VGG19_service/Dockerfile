@@ -15,13 +15,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY VGG19_service/requirements.txt .
 RUN pip install --no-cache-dir --timeout 120 -r requirements.txt
 
-ARG KAGGLE_API_TOKEN
-ENV KAGGLE_API_TOKEN=${KAGGLE_API_TOKEN:-}
-
-RUN mkdir -p /root/.config/kaggle
-
-RUN kaggle kernels output aziz0220/real-deep-learning-project/VGG19.keras -p .
-
 COPY VGG19_service/app.py .
 COPY dataset/metal.wav .
 
