@@ -6,7 +6,7 @@
   "env": {
     "NEXT_PUBLIC_SVM_URL": "https://music-genre-svm.onrender.com/classify_genre",
     "NEXT_PUBLIC_VGG_URL": "https://music-genre-vgg.onrender.com/vgg19_service",
-    "NEXT_PUBLIC_SITE_URL": "https://music-genre-classifier.vercel.app"
+    "NEXT_PUBLIC_SITE_URL": "https://music-genre-classify.vercel.app"
   },
   "rewrites": [
     {

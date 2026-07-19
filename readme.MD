@@ -17,7 +17,7 @@ Classify music genres from WAV audio files using two machine learning models —
 
 | Service | URL |
 |---|---|
-| Frontend | [https://music-genre-classifier.vercel.app](https://music-genre-classifier.vercel.app) |
+| Frontend | [https://music-genre-classify.vercel.app](https://music-genre-classify.vercel.app) |
 | SVM API | [https://music-genre-svm.onrender.com](https://music-genre-svm.onrender.com) |
 | VGG19 API | [https://music-genre-vgg.onrender.com](https://music-genre-vgg.onrender.com) |
 
