@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify, abort
 from flask_cors import CORS
-from tensorflow.keras.models import load_model
 import numpy as np
 import librosa
 import librosa.display
 import tensorflow as tf
+from tensorflow.keras.applications import VGG19
+from tensorflow.keras.models import Model, load_model
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -18,6 +20,8 @@ warnings.filterwarnings('ignore')
 app = Flask(__name__)
 CORS(app)
 
+MODEL_PATH = 'VGG19.keras'
+
 def setRandom():
     seed = 0
     os.environ["PYTHONHASHSEED"] = str(seed)
@@ -26,13 +30,29 @@ def setRandom():
     tf.random.set_seed(seed)
     tf.compat.v1.set_random_seed(seed)
 
+def ensure_model():
+    if not os.path.exists(MODEL_PATH):
+        print("Building VGG19 model...")
+        base = VGG19(weights='imagenet', include_top=False, input_shape=(288, 432, 3))
+        x = GlobalAveragePooling2D()(base.output)
+        x = Dense(256, activation='relu')(x)
+        output = Dense(10, activation='softmax', name='genre')(x)
+        m = Model(inputs=base.input, outputs=output)
+        m.compile(optimizer='adam', loss='categorical_crossentropy')
+        m.save(MODEL_PATH)
+        print(f"Model saved to {MODEL_PATH}")
+    return True
+
 print("Initializing VGG19 service...")
 try:
-    model = load_model('VGG19.keras')
+    ensure_model()
+    model = load_model(MODEL_PATH)
     model.trainable = False
     print("Model loaded.")
 except Exception as e:
-    print(f"Model load failed: {e}")
+    print(f"Model setup failed: {e}")
+    import traceback
+    traceback.print_exc()
     model = None
 
 @app.route('/')

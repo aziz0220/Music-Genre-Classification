@@ -15,9 +15,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY VGG19_service/requirements.txt .
 RUN pip install --no-cache-dir --timeout 120 -r requirements.txt
 
-COPY VGG19_service/generate_model.py .
-RUN python generate_model.py
-
 COPY VGG19_service/app.py .
 COPY dataset/metal.wav .
 
