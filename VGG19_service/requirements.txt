@@ -1,11 +1,9 @@
 Flask
 flask-cors
-librosa==0.10.0.post2
-scikit-learn==1.2.2
-tensorflow==2.12.0
-pydub==0.25.1
-matplotlib==3.7.1
+librosa
+scikit-learn
+tensorflow
+matplotlib
 pillow
 kaggle
-pytest
-pytest-flask
+gunicorn
