@@ -15,10 +15,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY VGG19_service/requirements.txt .
 RUN pip install --no-cache-dir --timeout 120 -r requirements.txt
 
-ARG KAGGLE_API_TOKEN
-ENV KAGGLE_API_TOKEN=${KAGGLE_API_TOKEN:-}
-COPY VGG19_service/download_model.py .
-RUN python download_model.py
+COPY VGG19_service/generate_model.py .
+RUN python generate_model.py
 
 COPY VGG19_service/app.py .
 COPY dataset/metal.wav .
