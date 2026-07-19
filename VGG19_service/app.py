@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 import os
 import random
 import warnings
+import requests
+import zipfile
+import io
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 warnings.filterwarnings('ignore')
@@ -26,15 +29,44 @@ def setRandom():
     tf.random.set_seed(seed)
     tf.compat.v1.set_random_seed(seed)
 
+def download_model():
+    model_path = 'VGG19.keras'
+    if os.path.exists(model_path):
+        return True
+    print("Downloading VGG19 model at runtime...")
+    url = "https://www.kaggle.com/api/v1/kernels/output/aziz0220/real-deep-learning-project"
+    token = os.environ.get('KAGGLE_API_TOKEN', '')
+    headers = {}
+    if token:
+        headers['Authorization'] = f'Bearer {token}'
+    try:
+        resp = requests.get(url, headers=headers, timeout=300, allow_redirects=True)
+        if resp.status_code != 200:
+            print(f"Kaggle API error: {resp.status_code}")
+            return False
+        z = zipfile.ZipFile(io.BytesIO(resp.content))
+        keras_files = [f for f in z.namelist() if '.keras' in f or '.h5' in f]
+        if not keras_files:
+            print("No model files in archive")
+            return False
+        with z.open(keras_files[0]) as f:
+            with open(model_path, 'wb') as out:
+                out.write(f.read())
+        print("Model downloaded at runtime.")
+        return True
+    except Exception as e:
+        print(f"Runtime download failed: {e}")
+        return False
+
 print("Initializing VGG19 service...")
+if not os.path.exists('VGG19.keras'):
+    download_model()
 try:
     model = load_model('VGG19.keras')
     model.trainable = False
     print("Model loaded.")
 except Exception as e:
     print(f"Model load failed: {e}")
-    import traceback
-    traceback.print_exc()
     model = None
 
 @app.route('/')
