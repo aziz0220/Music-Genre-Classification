@@ -5,5 +5,5 @@ scikit-learn
 tensorflow
 matplotlib
 pillow
-kaggle
+requests
 gunicorn

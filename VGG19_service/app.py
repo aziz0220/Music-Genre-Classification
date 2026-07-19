@@ -10,8 +10,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
 import random
-import subprocess
-import sys
+import requests
 import warnings
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -31,16 +30,21 @@ def setRandom():
 def download_model():
     model_path = 'VGG19.keras'
     if not os.path.exists(model_path):
-        print("Downloading VGG19 model from Kaggle...")
-        result = subprocess.run(
-            [sys.executable, '-m', 'kaggle', 'kernels', 'output',
-             'aziz0220/real-deep-learning-project/VGG19.keras', '-p', '.'],
-            capture_output=True, text=True, timeout=600
-        )
-        if result.returncode != 0:
-            print(f"Download failed: {result.stderr}")
-            raise RuntimeError(f"Failed to download model: {result.stderr}")
-        print("Model downloaded.")
+        print("Downloading VGG19 model...")
+        url = "https://www.kaggle.com/api/v1/kernels/output/aziz0220/real-deep-learning-project"
+        token = os.environ.get('KAGGLE_API_TOKEN', '')
+        headers = {}
+        if token:
+            headers['Authorization'] = f'Bearer {token}'
+        resp = requests.get(url, headers=headers, timeout=300, allow_redirects=True)
+        if resp.status_code != 200:
+            raise RuntimeError(f"Kaggle API error: HTTP {resp.status_code}")
+        import zipfile, io
+        z = zipfile.ZipFile(io.BytesIO(resp.content))
+        with z.open('VGG19.keras') as f:
+            with open(model_path, 'wb') as out:
+                out.write(f.read())
+        print(f"Model downloaded successfully.")
     else:
         print("Model already exists.")
 
@@ -52,6 +56,8 @@ try:
     print("Model loaded.")
 except Exception as e:
     print(f"Model load failed: {e}")
+    import traceback
+    traceback.print_exc()
     model = None
 
 @app.route('/')
@@ -129,8 +135,9 @@ def vgg19_service():
         return jsonify({'genre': predicted_genre})
 
     except Exception as e:
-        if os.path.exists(temp_file_path):
-            os.remove(temp_file_path)
+        for p in [temp_file_path, 'temp_spectrogram.png']:
+            if os.path.exists(p):
+                os.remove(p)
         return jsonify({'genre': 'error', 'description': str(e)}), 500
 
 if __name__ == '__main__':
