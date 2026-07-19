@@ -5,18 +5,16 @@ services:
     repo: https://github.com/aziz0220/Music-Genre-Classification
     dockerfilePath: ./SVM_service/Dockerfile
     dockerContext: .
-    envVars:
-      - key: FLASK_ENV
-        value: production
     healthCheckPath: /
     plan: free
 
   - type: web
     name: music-genre-vgg
-    env: docker
+    env: python
     repo: https://github.com/aziz0220/Music-Genre-Classification
-    dockerfilePath: ./VGG19_service/Dockerfile
-    dockerContext: .
+    rootDir: VGG19_service
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:8000 --timeout 300 --workers 1
     envVars:
       - key: KAGGLE_API_TOKEN
         sync: false
